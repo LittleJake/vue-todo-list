@@ -1,0 +1,64 @@
+@charset "utf-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}		/* 初始化样式 */
+
+body {
+	background-image: url('../img/bg.jpg');
+}
+
+.box {
+	width: 50%;
+	border-radius: 5px;
+	margin: 3% auto;
+	background: rgba(255,255,255,0.8);
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.left-container > table > tbody, 
+.right-container > table > tbody{
+	background-color: rgba(0,0,0,0.1);
+}
+
+
+.right-container, 
+.left-container {
+	padding: 0 2%;
+	width: 50%;
+	border-radius: 5px;
+	margin: 0 auto;
+	height: 1000px;
+	background: rgba(255,255,255,0.8);
+}
+
+#tab {
+	margin: 0 auto;
+	width: 50%;
+	
+}
+
+#adder {
+	padding: 2%;
+	text-align: center;
+}
+
+@media screen and (max-width: 770px) {
+	/* 自适应 */
+	
+	.right-container, 
+	.left-container {
+
+		margin: 0;
+	}		
+
+
+}

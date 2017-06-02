@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>todos List</title>
+		
+	</head>
+	<body>
+		<link href="css/custom.css" rel="stylesheet"/>
+		<link href="css/bootstrap.css" rel="stylesheet"/>
+		
+		<div class="main tab-content" id="todo">
+			<div class="box">
+				<div id="adder">
+					<h1>Todo List</h1>
+					<hr />
+					<input type="text" v-on:keyup.enter="add" v-model="newtodo" placeholder="输入你想做的" />
+					<input v-on:click="add" class="btn btn-default" type="button" value="添加" />
+				</div>
+			</div>
+			<!--  以上为添加todo项input区域  -->
+			
+			<ul class="nav nav-tabs" id="tab">
+				<li class="active"><a href="#todo-list" data-toggle="tab">未完成</a></li>
+				<li><a href="#finish-list" data-toggle="tab">已完成</a></li>
+			</ul>
+			
+			<!--  以上为tab区域  -->
+			<div id="todo-list" class="left-container tab-pane table-responsive fade in active">
+				<h3>未完成</h3>
+				<hr>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>项目</th>
+							<th style="width: 200px;">
+								<input v-on:click="patchDel('todos')" type="button" class="btn btn-danger" value="批量删除">
+								<input v-on:click="patchFinish" type="button" class="btn btn-success" value="批量完成">
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-if="index < page && index >= (page - 15)"  v-for="(todo,index) in todos">
+							<!--  分页渲染  -->
+							<td>{{ index + 1 }}</td>
+							
+							<td v-on:dblclick="visibleToDo(index)" v-if="todo.seen">
+								{{ todo.text }}
+							</td>
+							<td v-else v-on:keyup.enter="visibleToDo(index)">
+								<input type="text" v-model="todo.text" />
+							</td>
+							<!--  以上为双击编辑的区域  -->
+							<td>
+								<input v-on:click="del(index, 'todos')" type="button" class="btn btn-danger" value="删除">
+								<input v-on:click="check(index, 'todos')" type="button" class="btn btn-success" value="完成">
+								<input v-bind:value="index" type="checkbox" v-model="checkedToDone" />
+							</td>
+						</tr>
+					</tbody>
+					
+				</table>
+				<hr>
+				<input value="上一页" type="button" class="btn btn-default left" v-on:click="pageToDo-=5" v-if="pageToDo-15 > 0" />
+				<input value="下一页" type="button" class="btn btn-default right" v-on:click="pageToDo+=5" v-if="todos.length > pageToDo" />
+				
+			</div>
+			<!--  以上为未完成列表的区域  -->
+			
+			<div id="finish-list" class="right-container tab-pane table-responsive fade">
+				<h3>已完成</h3>
+				<hr>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>项目</th>
+							<th style="width: 200px;">
+								<input v-on:click="patchDel('dones')" type="button" class="btn btn-danger" value="批量删除">
+								<!-- <input v-on:click="patchToDo" type="button" class="btn btn-warning" value="批量未完成">  -->
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-if="index < page && index >= (page - 15)" v-for="(done,index) in dones">
+							<!--  分页渲染  -->
+							<td>{{ index + 1 }}</td>
+							<td>{{ done.text }}</td>
+							<td>
+								<input v-on:click="del(index, 'dones')" type="button" class="btn btn-danger" value="删除">
+								<!-- <input v-on:click="check(index, 'dones')" type="button" class="btn btn-warning" value="未完成"> -->
+								<input v-bind:value="index" type="checkbox" v-model="checkedToToDo" />
+							</td>
+						</tr>
+					</tbody>
+					
+				</table>
+				<hr>
+				<input value="上一页" type="button" class="btn btn-default left" v-on:click="pageDone -=5" v-if="pageDone-15 > 0" />
+				<input value="下一页" type="button" class="btn btn-default right" v-on:click="pageDone +=5" v-if="dones.length > pageDone" />
+			</div>
+			<!--  以上为完成列表的区域  -->
+			
+		</div>
+
+		<script src="js/jquery-1.11.0.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/custom.js"></script>
+	</body>
+</html>
